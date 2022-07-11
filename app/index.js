@@ -91,7 +91,86 @@ function loops()
 }
 
 // If
-function ConditionalIf()
+function conditionalIf()
 {
+    var person = {
+        name: "Amr Hassan",
+        job: "Software Engineer",
+        age: 30,
+        yearsOfExperience: 3,
+        skills: ["c++", "js", "php", "mysql"]
+    };
 
+    var requiredSkill = "JS";
+
+    if(person.skills.includes(requiredSkill.toLowerCase()))
+    {
+        log("Your skills fit the job requirements.");
+    }
+    else
+    {
+        log("You lack required skills.");
+    }
+}
+
+// switch
+function conditionalSwitch()
+{
+    var person = {
+        name: "Amr Hassan",
+        job: "Software Engineer",
+        age: 30,
+        yearsOfExperience: 3,
+        skills: ["c++", "js", "php", "mysql"]
+    };
+
+    switch(true)
+    {
+        case (person.yearsOfExperience >= 1 && person.yearsOfExperience < 3): // from 1 to 2
+            log("You're junior engineer (SWE1)");
+            break;
+        
+        case (person.yearsOfExperience >= 3 && person.yearsOfExperience <= 5): // from 3 to 4
+            log("You're mid-level engineer (SWE2)");
+            break;
+
+        case (person.yearsOfExperience >= 6): // 6 or more
+            log("You're senior engineer (SWE3)");
+            break;
+
+        default:
+            log("Who are you?");
+    }
+
+    switch(new Date().getDay())
+    {
+        case 1:
+            log("It's Monday!");
+            break;
+        
+        default:
+            log("I don't know!");
+    }
+    
+}
+
+// Operators
+function operators()
+{
+    /*
+        # arithmitic (+ - / * %)
+
+        # assignment (=)
+        
+        # equality (==)
+            "0" == 0 == false -> true (auto casting or conversion)
+
+        # identical (===)
+            "0" === 0 === false -> false
+            
+        # comparison (== < <= > >= !=)
+
+        # logical (&& || !)
+
+    */
 }

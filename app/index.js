@@ -176,8 +176,8 @@ function operators()
 }
 
 
-// function: map
-function myFuncs()
+// useful function
+function usefulFuncs()
 {
     // map: executes a given function with every element in a given array
     var nums1 = [0, 1, 2, 3, 4].map((item) => {return item * 2;});
@@ -189,9 +189,10 @@ function myFuncs()
 
     // reduce:  
     // - reduces all the items into 1
-    // - with every element, it gives you the previous value and the current value
+    // - with every element, it gives you the previous value and the current 
+    // - the previous value is the returned value from the callback func
     var total = [1, 2, 3, 4].reduce((prev, curr) => {return prev + curr;});
     log(total);
 }
 
-myFuncs();
+usefulFuncs();

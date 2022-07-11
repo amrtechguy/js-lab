@@ -174,3 +174,24 @@ function operators()
 
     */
 }
+
+
+// function: map
+function myFuncs()
+{
+    // map: executes a given function with every element in a given array
+    var nums1 = [0, 1, 2, 3, 4].map((item) => {return item * 2;});
+    log(nums1);
+
+    // filter: returns the array's element if the callback func returns true
+    var nums2 = [0, 1, 2, 3, 4].filter((item) => {return item % 2 == 0;});
+    log(nums2);
+
+    // reduce:  
+    // - reduces all the items into 1
+    // - with every element, it gives you the previous value and the current value
+    var total = [1, 2, 3, 4].reduce((prev, curr) => {return prev + curr;});
+    log(total);
+}
+
+myFuncs();

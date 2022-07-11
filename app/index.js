@@ -175,7 +175,6 @@ function operators()
     */
 }
 
-
 // useful function
 function usefulFuncs()
 {
@@ -195,4 +194,15 @@ function usefulFuncs()
     log(total);
 }
 
-usefulFuncs();
+// callback
+var sayMyName = function (name)
+{
+    log("Hello, " + name + "!");
+};
+
+function callBackFunc(name, callback)
+{
+    callback(name);
+}
+
+callBackFunc("Amr Hassan", sayMyName);

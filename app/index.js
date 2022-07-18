@@ -1,5 +1,9 @@
 /* Everything in JS is an object */
 
+/* imports from js modules*/
+import * as Math from './Math.js';
+import {add} from './Math.js';
+
 // Log
 function log(text)
 {
@@ -171,7 +175,6 @@ function operators()
         # comparison (== < <= > >= !=)
 
         # logical (&& || !)
-
     */
 }
 
@@ -194,15 +197,277 @@ function usefulFuncs()
     log(total);
 }
 
-// callback
-var sayMyName = function (name)
+// callback -> a function that is passed as a parameter to another function
+function myCallbackFunc()
 {
-    log("Hello, " + name + "!");
-};
-
-function callBackFunc(name, callback)
-{
-    callback(name);
+    var sayMyName = function (name)
+    {
+        log("Hello, " + name + "!");
+    };
+    
+    function callBackFunc(name, callback)
+    {
+        callback(name);
+    }
+    
+    callBackFunc("Amr Hassan", sayMyName);
 }
 
-callBackFunc("Amr Hassan", sayMyName);
+// variable scope
+function variableScope()
+{
+    {
+        var x = 30;
+        let y = 50;
+    }
+    
+    log(x);
+    log(y);
+}
+
+// named exports & import
+function exportImport()
+{
+    log(Math.add(1, 2));
+    log(add(1, 2));
+}
+
+// constants
+function myConst()
+{
+    // string
+    const myStr = 'Amr';
+    myStr[0] = '3'; // doesn't works
+
+    // array
+    const myArr = ['A', 'm', 'r'];
+    myArr[0] = '3'; // works
+
+    // object
+    const person = {};
+    person['name'] = 'Amr hassan';  // works
+}
+
+// template literlas
+function templateLiterals()
+{
+    let name = 'Amr Hassan';
+    let job = 'software engineer';
+
+    log(`Hello! I'm ${name} and I work as a ${job}.`);
+}
+
+// spread operator arrays
+function spreadOperatorArr(...arr)
+{
+    let nums = [1, 2, 3, 4];
+    let letters = ['a', 'b', 'c'];
+
+    let myArr = [...arr, ...nums, ...letters];
+
+    myArr.forEach((item) => {log(item);});
+
+    log(myArr);
+}
+
+// spread operator objects
+function spreadOperatorObj()
+{
+    const address = {
+        city: 'Beheira',
+        country: 'Egypt',
+        postCode: '12345'
+    };
+
+    const name = {
+        firstName: 'Amr',
+        lastName: 'Hassan'
+    };
+
+    const person = {...name, ...address};
+
+    log(JSON.stringify(person));
+}
+
+// arrow function [C++ lambda function]
+const myArrFunc = [1, 2, 3, 4].map((item, index) => item + index);
+
+// Lexical this
+function lexicalThis()
+{
+    let person = {
+        name: 'Amr Hassan',
+        skills: ['C++', 'JavaScript', 'PHP', 'MySQL'],
+        toString: function()
+        {
+            log(`${this.name} is experienced in ${this.skills}`);
+        },
+        getSkills: function()
+        {
+            this.skills.forEach((item) => {
+                log(`${this.name} has ${item}`);
+            });
+        }
+    };
+
+    // person.toString();
+    person.getSkills();
+}
+
+// Enhanced object properties
+function enhancedObjectProerties()
+{
+    const name = 'Amr Hassan';
+    const agePronoun = 'AGE';
+
+    const person = (name, age) => {
+        return {
+            name,   // name: name
+            [agePronoun.toLowerCase()]: age // age: age
+        };
+    };
+
+    const p = person('Amr Hassan', 30);
+    log(`${p.name} is ${p.age}`);
+}
+
+// Array destructuring
+function arrayDestructuring()
+{
+    const names = ['Amr', 'Alaa', 'Hatem', 'Hassan', 'Esam']
+    const [a, , c, ...restOfNames] = names;
+
+    // log(`${a},${c}`);
+    // log(`Rest of names(${restOfNames.length}): ${restOfNames}`);
+
+    const person = {
+        name: 'Amr Hassan',
+        gender: 'male',
+        address: {
+            country: 'Egypt',
+            city: 'Behaeira',
+            postCode: 'EG',
+            fullAddress: {
+                doorNumber: 1,
+                street: 'AM st'
+            }
+        }
+    };
+
+    /* const {theName, address: {country: theCountry}} = person; */
+    const {name: theName, address: {country: theCountry}} = person;
+
+    // within a loop
+    const persons = [
+        {
+            name: 'Amr Hassan',
+            gender: 'male',
+            address: {
+                country: 'Egypt',
+                city: 'Behaeira',
+                postCode: 'EG',
+                fullAddress: {
+                    doorNumber: 1,
+                    street: 'AM st'
+                }
+            }
+        },
+        {
+            name: 'Mahmoud Hassan',
+            gender: 'male',
+            address: {
+                country: 'Egypt',
+                city: 'Behaeira',
+                postCode: 'EG',
+                fullAddress: {
+                    doorNumber: 1,
+                    street: 'AM st'
+                }
+            }
+        }
+    ];
+
+    for(var {name: personName, address: {country: personCountry}} of persons)
+    {
+        log(`${personName} lives in ${personCountry}`);
+    }
+}
+
+// function default parameters
+function functionDefaultParameters()
+{
+    const calculatePay = (yearSalary, bonus = {
+        teamBonus: 0,
+        employeeBonus: 0
+    }) => {
+        return yearSalary + bonus.teamBonus + bonus.employeeBonus;
+    };
+
+    log(calculatePay(100000000, {teamBonus: 10000000, employeeBonus: 1000000}));
+}
+
+// Class
+class Account 
+{
+    constructor(id = 0, username = '', fullName = '', email = '')
+    {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.email = email;
+        
+        log(`A new account with id(${this.id}) was created successfully!`);
+    }
+
+    login()
+    {
+        log('Login...');
+    }
+
+    register()
+    {
+        log('Setting up a new account...');
+    }
+
+    logOut()
+    {
+        log('Logging out...');
+    }
+
+    print()
+    {
+        log(`Account [ID: ${this.id}, Username: ${this.username}, Full name: ${this.fullName}, email: ${this.email}`);
+    }
+
+    // static method
+    static who()
+    {
+        log('My name is Amr Hassan, a software engineer!');
+    }
+}
+
+class Admin extends Account
+{
+    constructor(id, username, fullName, email, role = '')
+    {
+        // the super class
+        super(id, username, fullName, email);
+        this.role = role;
+    }
+
+    print()
+    {
+        super.print();
+        log( `Role: ${this.role}`);
+    }
+
+    printRole()
+    {
+        log(`Role: ${this.role}`);
+    }
+}
+
+// const a = new Admin(2, 'amrhassan', 'Amr Hassan', 'amr.h.shehata@gmail.com', 'admin');
+// a.print();
+// Account.who();
+

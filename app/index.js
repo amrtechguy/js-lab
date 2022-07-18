@@ -467,7 +467,48 @@ class Admin extends Account
     }
 }
 
-// const a = new Admin(2, 'amrhassan', 'Amr Hassan', 'amr.h.shehata@gmail.com', 'admin');
-// a.print();
-// Account.who();
+/* 
+const a = new Admin(2, 'amrhassan', 'Amr Hassan', 'amr.h.shehata@gmail.com', 'admin');
+a.print();
+Account.who();
+*/
 
+/**
+ * Promises
+ * * state [pending, fulfilled, rejected]
+ * * ().then().catch()
+ */
+const idPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve([1, 2, 3]);
+    }, 100);
+
+    setTimeout(() => {
+        reject("Unable to return account Ids.");
+    }, 500);
+});
+
+const namePromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(['Yourexa', 'Amr Hassan', 'Peter Slovanky']);
+    }, 100);
+
+    setTimeout(() => {
+        reject("Unable to return account names.");
+    }, 300);
+});
+
+Promise.all([idPromise, namePromise])
+.then((data) => 
+{
+    const [ids, names] = data;
+
+    for(let i = 0; i < ids.length; i++)
+    {
+        log(`[${ids[i]}] ${names[i]}`);
+    }
+})
+.catch((error) => 
+{
+    log(error);
+});

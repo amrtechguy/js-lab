@@ -407,108 +407,228 @@ function functionDefaultParameters()
 }
 
 // Class
-class Account 
+function myClass()
 {
-    constructor(id = 0, username = '', fullName = '', email = '')
+    class Account 
     {
-        this.id = id;
-        this.username = username;
-        this.fullName = fullName;
-        this.email = email;
-        
-        log(`A new account with id(${this.id}) was created successfully!`);
+        constructor(id = 0, username = '', fullName = '', email = '')
+        {
+            this.id = id;
+            this.username = username;
+            this.fullName = fullName;
+            this.email = email;
+            
+            log(`A new account with id(${this.id}) was created successfully!`);
+        }
+    
+        login()
+        {
+            log('Login...');
+        }
+    
+        register()
+        {
+            log('Setting up a new account...');
+        }
+    
+        logOut()
+        {
+            log('Logging out...');
+        }
+    
+        print()
+        {
+            log(`Account [ID: ${this.id}, Username: ${this.username}, Full name: ${this.fullName}, email: ${this.email}`);
+        }
+    
+        // static method
+        static who()
+        {
+            log('My name is Amr Hassan, a software engineer!');
+        }
     }
-
-    login()
+    
+    class Admin extends Account
     {
-        log('Login...');
+        constructor(id, username, fullName, email, role = '')
+        {
+            // the super class
+            super(id, username, fullName, email);
+            this.role = role;
+        }
+    
+        print()
+        {
+            super.print();
+            log( `Role: ${this.role}`);
+        }
+    
+        printRole()
+        {
+            log(`Role: ${this.role}`);
+        }
     }
-
-    register()
-    {
-        log('Setting up a new account...');
-    }
-
-    logOut()
-    {
-        log('Logging out...');
-    }
-
-    print()
-    {
-        log(`Account [ID: ${this.id}, Username: ${this.username}, Full name: ${this.fullName}, email: ${this.email}`);
-    }
-
-    // static method
-    static who()
-    {
-        log('My name is Amr Hassan, a software engineer!');
-    }
+    
+    const a = new Admin(2, 'amrhassan', 'Amr Hassan', 'amr.h.shehata@gmail.com', 'admin');
+    a.print();
+    Account.who(); 
 }
-
-class Admin extends Account
-{
-    constructor(id, username, fullName, email, role = '')
-    {
-        // the super class
-        super(id, username, fullName, email);
-        this.role = role;
-    }
-
-    print()
-    {
-        super.print();
-        log( `Role: ${this.role}`);
-    }
-
-    printRole()
-    {
-        log(`Role: ${this.role}`);
-    }
-}
-
-/* 
-const a = new Admin(2, 'amrhassan', 'Amr Hassan', 'amr.h.shehata@gmail.com', 'admin');
-a.print();
-Account.who();
-*/
 
 /**
  * Promises
  * * state [pending, fulfilled, rejected]
  * * ().then().catch()
  */
-const idPromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve([1, 2, 3]);
-    }, 100);
-
-    setTimeout(() => {
-        reject("Unable to return account Ids.");
-    }, 500);
-});
-
-const namePromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve(['Yourexa', 'Amr Hassan', 'Peter Slovanky']);
-    }, 100);
-
-    setTimeout(() => {
-        reject("Unable to return account names.");
-    }, 300);
-});
-
-Promise.all([idPromise, namePromise])
-.then((data) => 
+function myPromise()
 {
-    const [ids, names] = data;
-
-    for(let i = 0; i < ids.length; i++)
+    const idPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve([1, 2, 3]);
+        }, 100);
+    
+        setTimeout(() => {
+            reject("Unable to return account Ids.");
+        }, 500);
+    });
+    
+    const namePromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(['Yourexa', 'Amr Hassan', 'Peter Slovanky']);
+        }, 100);
+    
+        setTimeout(() => {
+            reject("Unable to return account names.");
+        }, 300);
+    });
+    
+    Promise.all([idPromise, namePromise])
+    .then((data) => 
     {
-        log(`[${ids[i]}] ${names[i]}`);
-    }
-})
-.catch((error) => 
+        const [ids, names] = data;
+    
+        for(let i = 0; i < ids.length; i++)
+        {
+            log(`[${ids[i]}] ${names[i]}`);
+        }
+    })
+    .catch((error) => 
+    {
+        log(error);
+    });
+}
+
+/**
+ * Fetch API
+ */
+function myFetch()
 {
-    log(error);
-});
+    const getReandomUsers = (count) => {
+        const fetchRandomUsers = fetch(`https://randomuser.me/api/?results=${count}`)
+        .then(data => {
+            data.json().then(randomUsers => {
+                randomUsers.results.forEach((user) => 
+                {
+                    const {gender, email} = user;
+                    log(`${gender} - ${email}`)
+                });
+            });
+        })
+        .catch(error => {
+            log(error);
+        });
+    };
+
+    getReandomUsers(3);
+}
+
+/**
+ * Generators
+ * * a function that can be paused
+ * * used with asynchronous computations
+ */
+function myGen()
+{
+    const getAllData = function* () {
+        yield 1;
+        yield false;
+        yield 'hello';
+        yield {name: 'Amr'};
+        return 'It\'s Done';
+    };
+
+    const getData = getAllData();
+
+    // console.log(getData.next().value);
+    // console.log(getData.next().value);
+    // console.log(getData.next().value);
+    // console.log(getData.next().value);
+    // console.log(getData.next().value);
+    // console.log(getData.next().value);
+
+    const getNumbers = function* (numbers)
+    {
+        for(var i = 0; i < numbers.length; i++)
+        {
+            yield numbers[i];
+        }
+
+        return 'Done!';
+    };
+
+    const getNumbersGen = getNumbers([1, 2, 3, 4, 5]);
+
+    const interval = setInterval(() => {
+        const next = getNumbersGen.next();
+
+        if(next.done)
+        {
+            log('It is done!');
+            clearInterval(interval);
+        }
+        else
+        {
+            log(next.value);
+        }
+    }, 1000);
+}
+
+/**
+ * Coroutines with Generators and Promises
+ * * solves the callback function hell
+ * * make the code cleaner
+ */
+function myCoRoutines()
+{
+}
+
+/**
+ * Async Await
+ */
+ function myAsyncAwait()
+ {
+    try
+    {
+        throw("Something went wrong!");
+    }
+    catch(error)
+    {
+        log(error);
+    }
+ }
+ 
+/**
+ * Try catch
+ */
+ function myTryCatch()
+ {
+    try
+    {
+        throw("Something went wrong!");
+    }
+    catch(error)
+    {
+        log(error);
+    }
+ }
+
+ myTryCatch();

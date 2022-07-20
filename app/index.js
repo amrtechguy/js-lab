@@ -603,19 +603,23 @@ function myCoRoutines()
 
 /**
  * Async Await
+ * * async function is able to return a promise
+ * * await is used inside async function to wait until a promise resolved
  */
- function myAsyncAwait()
- {
-    try
-    {
-        throw("Something went wrong!");
-    }
-    catch(error)
-    {
-        log(error);
-    }
- }
+async function renderView()
+{
+    let viewPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("OK!");
+        }, 3000);
+    });
+
+    document.querySelector('#logs').innerHTML = await viewPromise;
+}
+
+renderView();
  
+
 /**
  * Try catch
  */
@@ -630,5 +634,3 @@ function myCoRoutines()
         log(error);
     }
  }
-
- myTryCatch();
